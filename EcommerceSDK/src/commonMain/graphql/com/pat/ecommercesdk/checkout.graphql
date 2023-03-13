@@ -1,0 +1,94 @@
+query Checkout($id: ID!) {
+    node(id: $id) {
+        ... on Checkout {
+            id
+            webUrl
+            createdAt
+            order {
+                id
+            }
+            taxesIncluded
+            totalTax {
+                amount
+                currencyCode
+            }
+            customAttributes {
+                key
+                value
+            }
+            completedAt
+            ready
+            requiresShipping
+            shippingAddress {
+                address1
+                address2
+                city
+                province
+                provinceCode
+                country
+                zip
+                firstName
+                lastName
+                phone
+            }
+            totalDuties {
+                amount
+                currencyCode
+            }
+            subtotalPrice {
+                amount
+                currencyCode
+            }
+            totalPrice {
+                amount
+                currencyCode
+            }
+            shippingLine {
+                handle
+                title
+                price {
+                    amount
+                    currencyCode
+                }
+            }
+            discountApplications(first: 10) {
+                nodes {
+                    allocationMethod,
+                    targetSelection,
+                    targetType,
+                    value {
+                        ...on MoneyV2 {
+                            amount
+                            currencyCode
+                        }
+                        ... on PricingPercentageValue {
+                            percentage
+                        }
+                    },
+                }
+            }
+            lineItems(first: 10) {
+                nodes {
+                    id
+                    title
+                    quantity
+                    variant {
+                        price {
+                            amount
+                            currencyCode
+                        }
+                        product {
+                            onlineStoreUrl
+                        }
+                    }
+                }
+                pageInfo {
+                    startCursor
+                    endCursor
+                    hasNextPage
+                    hasPreviousPage
+                }
+            }
+        }
+    }
+}
